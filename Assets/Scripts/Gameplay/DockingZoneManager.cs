@@ -13,8 +13,7 @@ public class DockingZoneManager : MonoBehaviour
     [SerializeField] private Collider dockTrigger;
     [SerializeField] private float maxDockingVelocity;
     [SerializeField] private float dockingTime;
-    [SerializeField] private GameObject dockingTimerObj;
-    [SerializeField] private TextMeshProUGUI dockingTimerText;
+    [SerializeField] private TextMeshProUGUI dockingTimer;
     [SerializeField] private UnityEvent onFullyDocked = new();
 
     [Header("Debug")]
@@ -39,11 +38,12 @@ public class DockingZoneManager : MonoBehaviour
         if (!IsBoatDockedPortside())
             _timeRemaining = dockingTime;
 
-        dockingTimerText.text = $"Docking: {Mathf.RoundToInt(_timeRemaining)}s remaining";
+        dockingTimer.text = $"Docking: {_timeRemaining:0.0}s remaining";
 
         if (_timeRemaining <= 0f)
         {
             _isDocking = false;
+            dockingTimer.transform.parent.gameObject.SetActive(false);
             onFullyDocked.Invoke();
         }
     }
@@ -72,7 +72,7 @@ public class DockingZoneManager : MonoBehaviour
 
         _isDocking = true;
         _timeRemaining = dockingTime;
-        dockingTimerObj.SetActive(true);
+        dockingTimer.transform.parent.gameObject.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
@@ -82,6 +82,6 @@ public class DockingZoneManager : MonoBehaviour
 
         _isDocking = false;
         _timeRemaining = dockingTime;
-        dockingTimerObj.SetActive(false);
+        dockingTimer.transform.parent.gameObject.SetActive(false);
     }
 }

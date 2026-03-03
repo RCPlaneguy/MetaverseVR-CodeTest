@@ -35,6 +35,8 @@ public class Powerboat : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.GamePaused)
+            return;
         HandlePhysicsMovement();
     }
 
