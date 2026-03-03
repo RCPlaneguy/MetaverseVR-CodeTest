@@ -55,8 +55,8 @@ public class Powerboat : MonoBehaviour
 
         currentSpeed = rb.velocity.magnitude;
 
-        // if boat is travelling below minimum steerage velocity, don't steer
-        if (rb.velocity.magnitude < minSteerageSpeed)
+        // if engines aren't running, don't steer
+        if (force.magnitude < minSteerageSpeed)
             return;
 
         // determine turn increment based on current steerangle
