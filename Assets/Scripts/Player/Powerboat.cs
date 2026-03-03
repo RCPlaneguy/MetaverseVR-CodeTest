@@ -13,6 +13,7 @@ public class Powerboat : MonoBehaviour
 
     [Header("Elements")]
     [SerializeField] private Rigidbody rb;
+    public Rigidbody Rigidbody => rb;
     [SerializeField] private Transform engines;
 
     [Header("Debug")]
