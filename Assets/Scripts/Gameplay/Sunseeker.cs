@@ -13,21 +13,32 @@ public class Sunseeker : MonoBehaviour
     [SerializeField] private int currentTargetIndex;
     [SerializeField] private Vector3 currentPosTarget;
     [SerializeField] private float distToTarget;
-    [SerializeField] private LineRenderer lineRen;
+    private LineRenderer lineRen;
+    private bool _reverseDirection;
 
     private void Start()
     {
-        // retrieve line renderer
+        // retrieve line renderer and path info
         lineRen = path.LineRen;
+        _reverseDirection = path.ReverseDir;
 
         // get random start position
         int randomIndex = Random.Range(0, lineRen.positionCount);
         transform.position = lineRen.GetPosition(randomIndex);
 
         // get target position (next one along, or first position if at end)
-        currentTargetIndex = randomIndex == lineRen.positionCount - 1
-           ? 0
-           : randomIndex + 1;
+        if (_reverseDirection)
+        {
+            currentTargetIndex = randomIndex == 0
+                ? lineRen.positionCount - 1
+                : randomIndex - 1;
+        }
+        else
+        {
+            currentTargetIndex = randomIndex == lineRen.positionCount - 1
+               ? 0
+               : randomIndex + 1;
+        }
         currentPosTarget = lineRen.GetPosition(currentTargetIndex);
 
         // rotate ship to face targetPos
@@ -41,16 +52,26 @@ public class Sunseeker : MonoBehaviour
 
         // rotate ship rotation towards next position
         Vector3 dirToTarget = currentPosTarget - transform.position;
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dirToTarget), turnSpeed * Time.deltaTime);
+        if (dirToTarget != Vector3.zero)
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dirToTarget), turnSpeed * Time.deltaTime);
 
         distToTarget = dirToTarget.magnitude;
 
         // if reached target
         if (distToTarget <= minTargetDistance)
         {
-            currentTargetIndex++;
-            if (currentTargetIndex >= lineRen.positionCount)
-                currentTargetIndex = 0;
+            if (_reverseDirection)
+            {
+                currentTargetIndex--;
+                if (currentTargetIndex <= 0)
+                    currentTargetIndex = lineRen.positionCount - 1;
+            }
+            else
+            {
+                currentTargetIndex++;
+                if (currentTargetIndex >= lineRen.positionCount)
+                    currentTargetIndex = 0;
+            }
 
             currentPosTarget = lineRen.GetPosition(currentTargetIndex);
         }

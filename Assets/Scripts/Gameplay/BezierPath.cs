@@ -9,6 +9,10 @@ public class BezierPath : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     public LineRenderer LineRen => lineRenderer;
     [SerializeField] private bool closedPath;
+    
+    // Used to coordinate and ensure all boats on this path go in the same direction
+    [SerializeField] private bool reverseBoatDirection;
+    public bool ReverseDir => reverseBoatDirection;
     [SerializeField] private int segmentCount = 75;
 
     [Header("Debug")]
