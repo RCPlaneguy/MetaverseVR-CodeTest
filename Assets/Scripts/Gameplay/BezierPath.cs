@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,18 +7,19 @@ public class BezierPath : MonoBehaviour
 {
     [SerializeField] private Transform[] controlNodes = { };
     [SerializeField] private LineRenderer lineRenderer;
+    public LineRenderer LineRen => lineRenderer;
     [SerializeField] private bool closedPath;
+    [SerializeField] private int segmentCount = 75;
 
     [Header("Debug")]
     [SerializeField] private float nodeGizmoSize = 1f;
+    [SerializeField] private int curveCount = 0;
 
     // non-serialized
-    private int curveCount = 0;
     private Vector3 p0;
     private Vector3 p1;
     private Vector3 p2;
     private Vector3 p3;
-    private const int Segment_Count = 50;
 
     [ContextMenu("Draw Curve")]
     private void DrawCurve()
@@ -44,9 +46,9 @@ public class BezierPath : MonoBehaviour
                 ? controlNodes[0].position
                 : controlNodes[nodeIndex + 3].position;
 
-            for (int j = 1; j <= Segment_Count; j++)
+            for (int j = 1; j <= segmentCount; j++)
             {
-                float t = j / (float)Segment_Count;
+                float t = j / (float)segmentCount;
 
                 Vector3 point;
 
@@ -94,8 +96,8 @@ public class BezierPath : MonoBehaviour
                     }
                 }
 
-                lineRenderer.positionCount = (i * Segment_Count) + j;
-                lineRenderer.SetPosition((i * Segment_Count) + (j - 1), point);
+                lineRenderer.positionCount = (i * segmentCount) + j;
+                lineRenderer.SetPosition((i * segmentCount) + (j - 1), point);
             }
         }
     }
