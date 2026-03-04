@@ -108,7 +108,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 7894399300931560018}
   - component: {fileID: 5618769572091557901}
   - component: {fileID: 8361558409298422778}
-  - component: {fileID: 7079580627198032101}
+  - component: {fileID: 6160131414406343963}
   m_Layer: 0
   m_Name: sm_soft_parts
   m_TagString: Player
@@ -337,20 +337,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7079580627198032101
-MeshCollider:
+--- !u!65 &6160131414406343963
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1682696386395639811}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 661f415d9ce1049c4beb3ba1dc79d9ef, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -1223288667470014194, guid: 7de4c40bcd77940c39fd39aabc6b22f0, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 4.2906637, y: 9.019455, z: 2.0231678}
+  m_Center: {x: 0.0000019073485, y: 0.24068451, z: 0.9471153}
 --- !u!1 &1818629494398807005
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,21 +398,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e709559baef7463cabc1bb1d7b1fbe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAcceleration: 20
-  turnSensitivty: 0.5
-  maxSteerAngle: 30
-  minSteerageSpeed: 10
+  maxSpeed: 25
+  maxSpeedReverse: 10
+  turningSpeed: 10
   rb: {fileID: 3047383033736816304}
   engines: {fileID: 1405565749892114878}
+  maxEngineAngle: 30
   globalVolume: {fileID: 0}
-  maxVignetteIntensity: 0.5
-  maxVignetteSpeed: 30
+  maxVignetteIntensity: 0.25
+  inputs: {x: 0, y: 0}
+  forceMagnitude: 0
   currentSpeed: 0
-  directionRot: {x: 0, y: 0, z: 0}
-  inputX: 0
-  inputY: 0
-  engineRot: {x: 0, y: 0, z: 0}
-  force: {x: 0, y: 0, z: 0}
+  torqueMagnitude: 0
+  currentTurningSpeed: 0
 --- !u!114 &3996479596944155095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,14 +450,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1818629494398807005}
   serializedVersion: 2
-  m_Mass: 10
-  m_Drag: 2
-  m_AngularDrag: 1
+  m_Mass: 1
+  m_Drag: 1
+  m_AngularDrag: 10
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &3320610302161151165
 GameObject:
   m_ObjectHideFlags: 0

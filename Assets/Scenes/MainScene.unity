@@ -57107,10 +57107,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1432256379, guid: 7632b5e2428fd4760a13a308f4c6db6b, type: 3}
-      propertyPath: m_RenderPostProcessing
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 821937480523898636, guid: 7632b5e2428fd4760a13a308f4c6db6b,
         type: 3}
       propertyPath: m_RootOrder
@@ -57176,16 +57172,6 @@ PrefabInstance:
       propertyPath: globalVolume
       value: 
       objectReference: {fileID: 832575518}
-    - target: {fileID: 6811288686086266642, guid: 7632b5e2428fd4760a13a308f4c6db6b,
-        type: 3}
-      propertyPath: maxVignetteSpeed
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 6811288686086266642, guid: 7632b5e2428fd4760a13a308f4c6db6b,
-        type: 3}
-      propertyPath: maxVignetteIntensity
-      value: 0.4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7632b5e2428fd4760a13a308f4c6db6b, type: 3}
 --- !u!114 &6811288686086266641 stripped
