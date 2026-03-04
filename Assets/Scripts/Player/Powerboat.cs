@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class Powerboat : MonoBehaviour
 {
@@ -16,6 +18,11 @@ public class Powerboat : MonoBehaviour
     public Rigidbody Rigidbody => rb;
     [SerializeField] private Transform engines;
 
+    [Header("Visual Effects")]
+    [SerializeField] private Volume globalVolume;
+    [SerializeField] private float maxVignetteIntensity = 0.5f;
+    [SerializeField] private float maxVignetteSpeed = 30f;
+
     [Header("Debug")]
     [SerializeField] private float currentSpeed;
     [SerializeField] private Vector3 directionRot;
@@ -26,11 +33,17 @@ public class Powerboat : MonoBehaviour
 
     private const float SteeringSpeed = 0.6f;
     private const float ForceMultiplier = 1200f;
+    private Vignette _vignette;
+    private bool _vignetteFound;
 
     private void Start()
     {
         engineRot = engines.localEulerAngles;
         directionRot = transform.eulerAngles;
+        _vignetteFound = globalVolume.profile.TryGet(out _vignette);
+        if (!_vignetteFound)
+            Debug.LogError("No vignette found!");
+
     }
 
     private void Update()
@@ -38,6 +51,10 @@ public class Powerboat : MonoBehaviour
         if (GameManager.GamePaused)
             return;
         HandlePhysicsMovement();
+
+        float ratio = currentSpeed / maxVignetteSpeed;
+        _vignette.intensity.value = maxVignetteIntensity * ratio;
+
     }
 
     private void HandlePhysicsMovement()
