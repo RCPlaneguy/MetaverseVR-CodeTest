@@ -65,7 +65,7 @@ public class Powerboat : MonoBehaviour
         // apply impulse force
         rb.AddForce(force, ForceMode.Force);
 
-        // angle engines based on inverse of inputX
+        // angle engines based on inputX,
         float steerAngle = -inputX * turnSensitivty * maxSteerAngle * 2;
         engineRot.y = Mathf.LerpAngle(engines.localEulerAngles.y, steerAngle, SteeringSpeed);
         engines.localEulerAngles = engineRot;
@@ -76,8 +76,9 @@ public class Powerboat : MonoBehaviour
         if (force.magnitude < minSteerageSpeed)
             return;
 
-        // determine turn increment based on current steerangle
-        float increment = -steerAngle * Time.deltaTime;
+        // determine turn increment based on current steerangle, invert it if going forward
+        float forwardInvert = inputY > 0 ? -1 : 1;
+        float increment = forwardInvert * steerAngle * Time.deltaTime;
 
         // increment boat direction by this value
         Vector3 tempRot = transform.eulerAngles;
