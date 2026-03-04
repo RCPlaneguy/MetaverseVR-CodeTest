@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 6268543527105083582}
   - component: {fileID: 9020625187376737727}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: Hull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,9 +157,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &5168878331739408433
+  m_Size: {x: 1, y: 6.209439, z: 1}
+  m_Center: {x: 0, y: 2.6047208, z: -0.00000003209643}
+--- !u!1 &5888962536202260794
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,44 +167,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7472910997866932887}
-  - component: {fileID: 2211217474857983695}
+  - component: {fileID: 7217761776387628417}
+  - component: {fileID: 4412900791439073791}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7472910997866932887
+--- !u!4 &7217761776387628417
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5168878331739408433}
-  m_LocalRotation: {x: 0.27835846, y: -0, z: -0, w: 0.96047723}
-  m_LocalPosition: {x: 0, y: 0.53937864, z: 0.15396814}
-  m_LocalScale: {x: 0.20337518, y: 0.20067269, z: 0.08193064}
+  m_GameObject: {fileID: 5888962536202260794}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: -0.00144, y: 0.47437, z: 0.06119}
+  m_LocalScale: {x: 0.20476383, y: 0.22044499, z: 0.29112747}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4228162599376080324}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -57.675, y: 0, z: 0}
---- !u!136 &2211217474857983695
-CapsuleCollider:
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4412900791439073791
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5168878331739408433}
+  m_GameObject: {fileID: 5888962536202260794}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.287781, z: 1}
+  m_Center: {x: 0, y: 0.14389053, z: 0.000000025977021}
 --- !u!1 &7333753438392972080
 GameObject:
   m_ObjectHideFlags: 0
