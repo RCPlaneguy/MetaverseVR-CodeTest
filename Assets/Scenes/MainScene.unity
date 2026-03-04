@@ -57181,6 +57181,11 @@ PrefabInstance:
       propertyPath: maxVignetteSpeed
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 6811288686086266642, guid: 7632b5e2428fd4760a13a308f4c6db6b,
+        type: 3}
+      propertyPath: maxVignetteIntensity
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7632b5e2428fd4760a13a308f4c6db6b, type: 3}
 --- !u!114 &6811288686086266641 stripped

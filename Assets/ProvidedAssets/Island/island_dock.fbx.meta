@@ -3,7 +3,47 @@ guid: 0e93ad0466a5e43f083bc48a9ee1b61d
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood Poles
+    second: {fileID: 2100000, guid: 47ba19ee806d14d2fbe1ff5f6d2a5486, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: foliage
+    second: {fileID: 2100000, guid: 9bd39256cc81940728353858850d1734, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: leaves
+    second: {fileID: 2100000, guid: 97058b232b21844d694ceccaa5c826ef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rock
+    second: {fileID: 2100000, guid: 8b64dc0fd59e84e599e4eed16a638caa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sand
+    second: {fileID: 2100000, guid: 04feb1ed1bacd46d99ed531cf9372f1c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tree
+    second: {fileID: 2100000, guid: 88f45ce1dc34544debd1ebe79a7f8209, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: walkway boards
+    second: {fileID: 2100000, guid: 6e8ab7e9bf54f413294ab2452ef09378, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wood beam long
+    second: {fileID: 2100000, guid: 01e13fc75ac684e358e56f722797e2b6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

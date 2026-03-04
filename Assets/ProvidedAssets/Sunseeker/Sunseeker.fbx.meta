@@ -3,7 +3,27 @@ guid: 35a234971a9ec4cd59ba16d2899cfe9e
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Exterior
+    second: {fileID: 2100000, guid: cbae2798235a74c7ca3aa4cc0b9c101f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hull
+    second: {fileID: 2100000, guid: 94d2bd7c520214513a157d67db839522, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Interior
+    second: {fileID: 2100000, guid: b5577dad7819d4af9975385fc5234b5e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Windows
+    second: {fileID: 2100000, guid: 64028b84fcdfc49279489e822b9e4580, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
