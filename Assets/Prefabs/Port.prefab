@@ -23,14 +23,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144818888}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.7071069, z: -0, w: 0.70710677}
   m_LocalPosition: {x: -92.81, y: 0, z: 149.46}
   m_LocalScale: {x: 5.8311424, y: 9.678959, z: 13.42387}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4406059744129503950}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &926934264284402767
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,8 +93,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3109357730699947407}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -95.7208, y: 0, z: 149.4887}
-  m_LocalScale: {x: 5.831142, y: 9.678959, z: 10.0126095}
+  m_LocalPosition: {x: -95.7208, y: -3.8218, z: 149.4887}
+  m_LocalScale: {x: 5.831142, y: 20.20176, z: 10.0126095}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4406059744129503950}
@@ -178,7 +178,7 @@ MonoBehaviour:
   playerBoat: {fileID: 0}
   cleat: {fileID: 2144818889}
   dockTrigger: {fileID: 2686086823794862449}
-  maxDockingVelocity: 0.1
+  maxDockingForce: 0
   dockingTime: 5
   dockingTimer: {fileID: 0}
   onFullyDocked:
