@@ -139,7 +139,7 @@ Material:
     - _SurfaceFoamSpeed: 0.025
     - _SurfaceFoamTiling: 50
     - _WaveLength: 1.4
-    - _WaveSpeed: 0.125
+    - _WaveSpeed: -0.125
     - _WaveSteepness: 2.8
     - _WorkflowMode: 1
     - _ZWrite: 1
