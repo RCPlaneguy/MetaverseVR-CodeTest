@@ -1,12 +1,14 @@
 #ifndef WAVESINCLUDE_INCLUDED
 #define WAVESINCLUDE_INCLUDED
 
+float _CustomTime;
+
 float3 GerstnerWave(float3 position, float steepness, float wavelength, float speed, float direction, inout float3 tangent, inout float3 binormal)
 {
     direction = direction * 2 - 1;
     float2 d = normalize(float2(cos(3.14159274 * direction), sin(3.14159274 * direction)));
     float k = 2 * 3.14159274 / wavelength;
-    float f = k * (dot(d, position.xz) - speed * _Time.y);
+    float f = k * (dot(d, position.xz) - speed * _CustomTime);
     float a = steepness / k;
 
     tangent += float3(

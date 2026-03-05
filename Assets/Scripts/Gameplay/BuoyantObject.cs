@@ -9,6 +9,9 @@ public class BuoyantObject : MonoBehaviour
 
     [Header("Waves")]
     [SerializeField] private Material waterMat;
+    [SerializeField] private float steepnessCorrection = -0.01f;
+    [SerializeField] private float wavelengthCorrection = 125f;
+    [SerializeField] private float speedCorrection = 125f;
 
     [Header("Buoyancy")]
     [Range(0.01f, 5f)] public float strength = 1f;
@@ -21,6 +24,7 @@ public class BuoyantObject : MonoBehaviour
     public Transform[] effectors;
 
     [Header("Debug")]
+    [SerializeField] private bool perfectWaveMatching;
     [SerializeField] private float steepness;
     [SerializeField] private float wavelength;
     [SerializeField] private float speed;
@@ -58,9 +62,9 @@ public class BuoyantObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-        steepness = waterMat.GetFloat("_WaveSteepness");
-        wavelength = waterMat.GetFloat("_WaveLength");
-        speed = waterMat.GetFloat("_WaveSpeed");
+        steepness = waterMat.GetFloat("_WaveSteepness") * steepnessCorrection;
+        wavelength = waterMat.GetFloat("_WaveLength") * wavelengthCorrection;
+        speed = waterMat.GetFloat("_WaveSpeed") * speedCorrection;
         directions = waterMat.GetVector("_WaveDirections");
 
         // set to true if any effector is underwater
@@ -74,6 +78,12 @@ public class BuoyantObject : MonoBehaviour
 
             effectorProjections[i] = effectorPosition;
             effectorProjections[i].y = waterHeight + waveDisplacement.y;
+
+            if (perfectWaveMatching)
+            {
+                transform.position = effectorProjections[i];
+                continue;
+            }
 
             // gravity
             rb.AddForceAtPosition(Physics.gravity / effectorCount, effectorPosition, ForceMode.Acceleration);

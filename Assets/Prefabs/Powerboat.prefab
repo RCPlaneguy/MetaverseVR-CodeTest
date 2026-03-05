@@ -506,15 +506,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterHeight: 0
   waterMat: {fileID: 2100000, guid: 7420c5210be644b078049ee914371587, type: 2}
-  strength: 1.5
+  strength: 1
   objectDepth: 0.2
   velocityDrag: 0.99
   angularDrag: 0.5
   effectors:
   - {fileID: 6534990251127050147}
-  - {fileID: 7334383526877459409}
-  - {fileID: 1692029932545616391}
-  - {fileID: 781300571211156085}
   steepness: 0
   wavelength: 0
   speed: 0
@@ -543,7 +540,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979428326827761038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: -4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
