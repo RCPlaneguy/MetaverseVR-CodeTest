@@ -6,11 +6,13 @@ public class BuoyantObject : MonoBehaviour
 {
     [Header("Water")]
     [SerializeField] private float waterHeight = 0.0f;
+
+    [Header("Waves")]
     [SerializeField] private Material waterMat;
 
     [Header("Buoyancy")]
     [Range(0.01f, 5f)] public float strength = 1f;
-    [Range(0.01f, 5f)] public float objectDepth = 1f;
+    [Range(0.2f, 5f)] public float objectDepth = 1f;
 
     public float velocityDrag = 0.99f;
     public float angularDrag = 0.5f;
@@ -18,14 +20,18 @@ public class BuoyantObject : MonoBehaviour
     [Header("Effectors")]
     public Transform[] effectors;
 
+    [Header("Debug")]
+    [SerializeField] private float steepness;
+    [SerializeField] private float wavelength;
+    [SerializeField] private float speed;
+    [SerializeField] private Vector4 directions;
+
     private Rigidbody rb;
     private Vector3[] effectorProjections;
+    private bool _inContactWithWater;
+    public bool InContactWithWater => _inContactWithWater;
 
     // water material values, retrieved on start
-    private float steepness;
-    private float wavelength;
-    private float speed;
-    private float[] directions;
 
     private readonly Color red = new(0.92f, 0.25f, 0.2f);
     private readonly Color green = new(0.2f, 0.92f, 0.51f);
@@ -39,17 +45,10 @@ public class BuoyantObject : MonoBehaviour
         rb.useGravity = false;
 
         effectorProjections = new Vector3[effectors.Length];
-        for (var i = 0; i < effectors.Length; i++) effectorProjections[i] = effectors[i].position;
-    }
-
-    private void Start()
-    {
-        // these values won't change at runtime, so get them on start
-        steepness = waterMat.GetFloat("_WaveSteepness");
-        wavelength = waterMat.GetFloat("_WaveLength");
-        speed = waterMat.GetFloat("_WaveSpeed");
-        Vector4 dir = waterMat.GetVector("_WaveDirections");
-        directions = new float[] { dir.x, dir.y, dir.z, dir.w };
+        for (int i = 0; i < effectors.Length; i++)
+        {
+            effectorProjections[i] = effectors[i].position;
+        }
     }
 
     private void OnDisable()
@@ -59,27 +58,37 @@ public class BuoyantObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var effectorAmount = effectors.Length;
+        steepness = waterMat.GetFloat("_WaveSteepness");
+        wavelength = waterMat.GetFloat("_WaveLength");
+        speed = waterMat.GetFloat("_WaveSpeed");
+        directions = waterMat.GetVector("_WaveDirections");
 
-        for (var i = 0; i < effectorAmount; i++)
+        // set to true if any effector is underwater
+        _inContactWithWater = false;
+
+        for (int i = 0, effectorCount = effectors.Length; i < effectorCount; i++)
         {
-            var effectorPosition = effectors[i].position;
+            Vector3 effectorPosition = effectors[i].position;
 
-            Vector3 waveDisplacement = GerstnerWaveDisplacement.GetWaveDisplacement(effectorPosition, steepness, wavelength, speed, directions);
+            Vector3 waveDisplacement = GerstnerWaveDisplacement.GetWaveDisplacement(effectorPosition, steepness, wavelength, speed, new float[] { directions.x, directions.y, directions.z, directions.w });
 
             effectorProjections[i] = effectorPosition;
             effectorProjections[i].y = waterHeight + waveDisplacement.y;
 
             // gravity
-            rb.AddForceAtPosition(Physics.gravity / effectorAmount, effectorPosition, ForceMode.Acceleration);
+            rb.AddForceAtPosition(Physics.gravity / effectorCount, effectorPosition, ForceMode.Acceleration);
 
-            var waveHeight = effectorProjections[i].y;
-            var effectorHeight = effectorPosition.y;
+            float effectorHeight = effectorPosition.y;
+            float waveHeight = effectorProjections[i].y;
 
-            if (!(effectorHeight < waveHeight)) continue; // submerged
+            // if not submerged, continue
+            if (effectorHeight > waveHeight)
+                continue;
 
-            var submersion = Mathf.Clamp01(waveHeight - effectorHeight) / objectDepth;
-            var buoyancy = Mathf.Abs(Physics.gravity.y) * submersion * strength;
+            _inContactWithWater = true;
+
+            float submersion = Mathf.Clamp01(waveHeight - effectorHeight) / objectDepth;
+            float buoyancy = Mathf.Abs(Physics.gravity.y) * submersion * strength;
 
             // buoyancy
             rb.AddForceAtPosition(Vector3.up * buoyancy, effectorPosition, ForceMode.Acceleration);
@@ -94,21 +103,24 @@ public class BuoyantObject : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (effectors == null) return;
+        if (effectors == null)
+            return;
 
-        for (var i = 0; i < effectors.Length; i++)
+        for (int i = 0; i < effectors.Length; i++)
         {
             if (!Application.isPlaying && effectors[i] != null)
             {
                 Gizmos.color = green;
                 Gizmos.DrawSphere(effectors[i].position, 0.06f);
             }
-
             else
             {
-                if (effectors[i] == null) return;
+                if (effectors[i] == null)
+                    return;
 
-                Gizmos.color = effectors[i].position.y < effectorProjections[i].y ? red : green; // submerged
+                Gizmos.color = effectors[i].position.y < effectorProjections[i].y
+                    ? red
+                    : green;
 
                 Gizmos.DrawSphere(effectors[i].position, 0.06f);
 

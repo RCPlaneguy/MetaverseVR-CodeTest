@@ -6,15 +6,17 @@ using UnityEngine.Rendering.Universal;
 public class Powerboat : MonoBehaviour
 {
     [Header("Helm")]
-    [SerializeField] private float maxSpeed = 30f;
-    [SerializeField] private float maxSpeedReverse = 15f;
-    [SerializeField] private float turningSpeed = 10f;
+    [SerializeField] private float maxSpeed = 22;
+    [SerializeField] private float maxSpeedReverse = 13;
+    [SerializeField] private float turningSpeed = 44;
 
     [Header("Elements")]
     [SerializeField] private Rigidbody rb;
     public Rigidbody Rigidbody => rb;
     [SerializeField] private Transform engines;
     [SerializeField] private float maxEngineAngle = 30f;
+    [SerializeField] private BuoyantObject buoyantObj;
+    [SerializeField] private GameManager gm;
 
     [Header("Visual Effects")]
     [SerializeField] private Volume globalVolume;
@@ -22,7 +24,7 @@ public class Powerboat : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private Vector2 inputs = new();
-    [SerializeField] private float forceMagnitude;
+    public float forceMagnitude;
     [SerializeField] private float currentSpeed;
 
     [Space]
@@ -35,7 +37,7 @@ public class Powerboat : MonoBehaviour
 
     // divide the speed values by this to get the 
     // force value necessary to achieve the corresponding top speed
-    private const float speedToForce = 4.5f;
+    private const float speedToForce = 5.68f;
 
     private void Start()
     {
@@ -51,6 +53,10 @@ public class Powerboat : MonoBehaviour
             return;
 
         HandleMovement();
+    }
+
+    private void LateUpdate()
+    {
         HandleVisuals();
     }
 
@@ -62,17 +68,19 @@ public class Powerboat : MonoBehaviour
             : ToForce(maxSpeedReverse) * inputs.y;
 
         // apply force to rb along forward axis
-        rb.AddForce(forceMagnitude * transform.forward);
+        if (buoyantObj.InContactWithWater || gm.ignoreOutOfWaterCheck)
+            rb.AddForce(forceMagnitude * Time.fixedDeltaTime * transform.forward);
 
         // calculate torque magnitude
-        torqueMagnitude = turningSpeed * inputs.x;
+        torqueMagnitude = ToForce(turningSpeed) * inputs.x;
 
         // if reversing, reverse direction of turn
         if (inputs.y < 0)
             torqueMagnitude *= -1f;
 
         // apply torque to rb along vertical axis
-        rb.AddTorque(torqueMagnitude * transform.up);
+        if (buoyantObj.InContactWithWater || gm.ignoreOutOfWaterCheck)
+            rb.AddTorque(torqueMagnitude * Time.fixedDeltaTime * transform.up);
 
         // update values for use elsewhere and for debug
         currentSpeed = rb.velocity.magnitude;
@@ -110,5 +118,5 @@ public class Powerboat : MonoBehaviour
         Gizmos.DrawRay(transform.position + (Vector3.up * 2), torqueMagnitude * transform.up);
     }
 
-    private float ToForce(float speed) => speed / speedToForce;
+    private float ToForce(float speed) => speed * speedToForce;
 }

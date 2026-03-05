@@ -11,7 +11,7 @@ public class DockingZoneManager : MonoBehaviour
     [SerializeField] private Powerboat playerBoat;
     [SerializeField] private Transform cleat;
     [SerializeField] private Collider dockTrigger;
-    [SerializeField] private float maxDockingVelocity;
+    [SerializeField] private float maxDockingForce;
     [SerializeField] private float dockingTime;
     [SerializeField] private TextMeshProUGUI dockingTimer;
     [SerializeField] private UnityEvent onFullyDocked = new();
@@ -32,7 +32,7 @@ public class DockingZoneManager : MonoBehaviour
 
         _timeRemaining -= Time.deltaTime;
 
-        if (playerBoat.Rigidbody.velocity.magnitude > maxDockingVelocity)
+        if (playerBoat.forceMagnitude > maxDockingForce)
             _timeRemaining = dockingTime;
 
         if (!IsBoatDockedPortside())

@@ -6937,7 +6937,7 @@
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "WaveSteepness",
     "m_DefaultReferenceName": "_WaveSteepness",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_WaveSteepness",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",

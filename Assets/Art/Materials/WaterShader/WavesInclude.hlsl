@@ -4,8 +4,8 @@
 float3 GerstnerWave(float3 position, float steepness, float wavelength, float speed, float direction, inout float3 tangent, inout float3 binormal)
 {
     direction = direction * 2 - 1;
-    float2 d = normalize(float2(cos(3.14 * direction), sin(3.14 * direction)));
-    float k = 2 * 3.14 / wavelength;
+    float2 d = normalize(float2(cos(3.14159274 * direction), sin(3.14159274 * direction)));
+    float k = 2 * 3.14159274 / wavelength;
     float f = k * (dot(d, position.xz) - speed * _Time.y);
     float a = steepness / k;
 
