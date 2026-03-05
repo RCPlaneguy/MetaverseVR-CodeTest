@@ -8,7 +8,7 @@ public static class GerstnerWaveDisplacement
         Vector2 d = new Vector2(Mathf.Cos(Mathf.PI * direction), Mathf.Sin(Mathf.PI * direction)).normalized;
         float k = 2 * Mathf.PI / wavelength;
         float a = steepness / k;
-        float f = k * (Vector2.Dot(d, new Vector2(position.x, position.z)) - speed * Time.time);
+        float f = k * (Vector2.Dot(d, new Vector2(position.x, position.z)) - speed * Time.timeSinceLevelLoad);
 
         return new Vector3(d.x * a * Mathf.Cos(f), a * Mathf.Sin(f), d.y * a * Mathf.Cos(f));
     }
