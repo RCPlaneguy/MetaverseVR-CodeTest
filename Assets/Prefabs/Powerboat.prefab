@@ -506,12 +506,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterHeight: 0
   waterMat: {fileID: 2100000, guid: 7420c5210be644b078049ee914371587, type: 2}
+  steepnessCorrection: -0.01
+  wavelengthCorrection: 125
+  speedCorrection: -125
   strength: 1
   objectDepth: 0.2
   velocityDrag: 0.99
   angularDrag: 0.5
   effectors:
   - {fileID: 6534990251127050147}
+  perfectWaveMatching: 0
   steepness: 0
   wavelength: 0
   speed: 0

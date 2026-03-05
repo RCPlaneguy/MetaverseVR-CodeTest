@@ -11,7 +11,7 @@ public class BuoyantObject : MonoBehaviour
     [SerializeField] private Material waterMat;
     [SerializeField] private float steepnessCorrection = -0.01f;
     [SerializeField] private float wavelengthCorrection = 125f;
-    [SerializeField] private float speedCorrection = 125f;
+    [SerializeField] private float speedCorrection = -125f;
 
     [Header("Buoyancy")]
     [Range(0.01f, 5f)] public float strength = 1f;
