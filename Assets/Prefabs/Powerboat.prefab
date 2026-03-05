@@ -516,9 +516,9 @@ MonoBehaviour:
   effectors:
   - {fileID: 6534990251127050147}
   perfectWaveMatching: 0
-  steepness: 0
-  wavelength: 0
-  speed: 0
+  steepness: -0.05
+  wavelength: 150
+  speed: -15.625
   directions: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1979428326827761038
 GameObject:
