@@ -14,6 +14,7 @@ public class BuoyantObject : MonoBehaviour
     [SerializeField] private float speedCorrection = -125f;
 
     [Header("Buoyancy")]
+    [SerializeField] private bool perfectWaveMatching;
     [Range(0.01f, 5f)] public float strength = 1f;
     [Range(0.2f, 5f)] public float objectDepth = 1f;
 
@@ -24,7 +25,6 @@ public class BuoyantObject : MonoBehaviour
     public Transform[] effectors;
 
     [Header("Debug")]
-    [SerializeField] private bool perfectWaveMatching;
     [SerializeField] private float steepness;
     [SerializeField] private float wavelength;
     [SerializeField] private float speed;
@@ -44,9 +44,12 @@ public class BuoyantObject : MonoBehaviour
 
     private void Awake()
     {
-        // Get rigidbody
-        rb = GetComponent<Rigidbody>();
-        rb.useGravity = false;
+        if (!perfectWaveMatching)
+        {
+            // Get rigidbody
+            rb = GetComponent<Rigidbody>();
+            rb.useGravity = false;
+        }
 
         effectorProjections = new Vector3[effectors.Length];
         for (int i = 0; i < effectors.Length; i++)
@@ -57,7 +60,8 @@ public class BuoyantObject : MonoBehaviour
 
     private void OnDisable()
     {
-        rb.useGravity = true;
+        if (!perfectWaveMatching)
+            rb.useGravity = true;
     }
 
     private void FixedUpdate()
