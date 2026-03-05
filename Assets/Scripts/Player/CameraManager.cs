@@ -13,6 +13,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float orbitSpeed = 1f;
     [SerializeField] private float orbitDamping = 1f;
 
+    private Transform target;
     private float _orbitDistance;
     private Vector3 _localPos;
     private Vector3 _localRot;
@@ -21,6 +22,10 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
+        // store ref to playerboat
+        target = transform.parent;
+        transform.parent = null;
+
         _curMouse = Mouse.current;
         _mainDisplay = Display.main;
 
@@ -33,6 +38,9 @@ public class CameraManager : MonoBehaviour
 
     private void LateUpdate()
     {
+        // update position of dollyparent to match target (player powerboat)
+        transform.position = target.position;
+
         // update orbitDistance with values from scroll wheel
         _orbitDistance += _curMouse.scroll.y.value * orbitZoomSpeed;
 
