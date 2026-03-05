@@ -430,9 +430,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e709559baef7463cabc1bb1d7b1fbe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 500
-  maxSpeedReverse: 130
-  turningSpeed: 440
+  maxSpeed: 165
+  maxSpeedReverse: 40
+  turningSpeed: 100
   rb: {fileID: 3047383033736816304}
   engines: {fileID: 1405565749892114878}
   maxEngineAngle: 30
@@ -509,6 +509,7 @@ MonoBehaviour:
   steepnessCorrection: -0.008
   wavelengthCorrection: 125
   speedCorrection: -125
+  perfectWaveMatching: 0
   strength: 1
   objectDepth: 0.2
   velocityDrag: 0.99
@@ -518,7 +519,6 @@ MonoBehaviour:
   - {fileID: 7334383526877459409}
   - {fileID: 1692029932545616391}
   - {fileID: 781300571211156085}
-  perfectWaveMatching: 0
   steepness: -0.05
   wavelength: 150
   speed: -15.625
