@@ -430,9 +430,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e709559baef7463cabc1bb1d7b1fbe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 22
-  maxSpeedReverse: 13
-  turningSpeed: 44
+  maxSpeed: 500
+  maxSpeedReverse: 130
+  turningSpeed: 440
   rb: {fileID: 3047383033736816304}
   engines: {fileID: 1405565749892114878}
   maxEngineAngle: 30
@@ -486,7 +486,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 1
-  m_AngularDrag: 10
+  m_AngularDrag: 4
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -506,7 +506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterHeight: 0
   waterMat: {fileID: 2100000, guid: 7420c5210be644b078049ee914371587, type: 2}
-  steepnessCorrection: -0.01
+  steepnessCorrection: -0.008
   wavelengthCorrection: 125
   speedCorrection: -125
   strength: 1
@@ -515,6 +515,9 @@ MonoBehaviour:
   angularDrag: 0.5
   effectors:
   - {fileID: 6534990251127050147}
+  - {fileID: 7334383526877459409}
+  - {fileID: 1692029932545616391}
+  - {fileID: 781300571211156085}
   perfectWaveMatching: 0
   steepness: -0.05
   wavelength: 150
@@ -544,7 +547,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979428326827761038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
