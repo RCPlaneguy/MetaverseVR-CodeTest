@@ -35,13 +35,6 @@ public class BuoyantObject : MonoBehaviour
     private bool _inContactWithWater;
     public bool InContactWithWater => _inContactWithWater;
 
-    // water material values, retrieved on start
-
-    private readonly Color red = new(0.92f, 0.25f, 0.2f);
-    private readonly Color green = new(0.2f, 0.92f, 0.51f);
-    private readonly Color blue = new(0.2f, 0.67f, 0.92f);
-    private readonly Color orange = new(0.97f, 0.79f, 0.26f);
-
     private void Awake()
     {
         if (!perfectWaveMatching)
@@ -124,7 +117,7 @@ public class BuoyantObject : MonoBehaviour
         {
             if (!Application.isPlaying && effectors[i] != null)
             {
-                Gizmos.color = green;
+                Gizmos.color = Color.green;
                 Gizmos.DrawSphere(effectors[i].position, 0.06f);
             }
             else
@@ -133,15 +126,15 @@ public class BuoyantObject : MonoBehaviour
                     return;
 
                 Gizmos.color = effectors[i].position.y < effectorProjections[i].y
-                    ? red
-                    : green;
+                    ? Color.red
+                    : Color.green;
 
                 Gizmos.DrawSphere(effectors[i].position, 0.06f);
 
-                Gizmos.color = orange;
+                Gizmos.color = Color.yellow;
                 Gizmos.DrawSphere(effectorProjections[i], 0.06f);
 
-                Gizmos.color = blue;
+                Gizmos.color = Color.blue;
                 Gizmos.DrawLine(effectors[i].position, effectorProjections[i]);
             }
         }
