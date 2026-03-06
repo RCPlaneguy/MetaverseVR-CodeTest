@@ -430,11 +430,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e709559baef7463cabc1bb1d7b1fbe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToMaxSpeed: 7
+  timeToMaxSpeed: 3
   maxSpeed: 330
-  timeToMaxSpeedReverse: 2
+  timeToMaxSpeedReverse: 1
   maxSpeedReverse: 80
-  turningSpeed: 100
+  turningSpeed: 200
   rb: {fileID: 3047383033736816304}
   engines: {fileID: 1405565749892114878}
   maxEngineAngle: 30

@@ -93,7 +93,6 @@ public class GameManager : MonoBehaviour
         float quit = input.Get<float>();
         if (quit > 0.5f)
         {
-            Debug.Log("Quitting game");
             Application.Quit();
         }
     }
