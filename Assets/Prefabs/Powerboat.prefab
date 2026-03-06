@@ -430,8 +430,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e709559baef7463cabc1bb1d7b1fbe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 165
-  maxSpeedReverse: 40
+  timeToMaxSpeed: 7
+  maxSpeed: 330
+  timeToMaxSpeedReverse: 2
+  maxSpeedReverse: 80
   turningSpeed: 100
   rb: {fileID: 3047383033736816304}
   engines: {fileID: 1405565749892114878}
@@ -439,12 +441,13 @@ MonoBehaviour:
   buoyantObj: {fileID: 1482531752436051346}
   gm: {fileID: 0}
   globalVolume: {fileID: 0}
+  maxVignetteSpeed: 20
   maxVignetteIntensity: 0.4
   inputs: {x: 0, y: 0}
   forceMagnitude: 0
-  currentSpeed: 0
+  currentVelocity: 0
   torqueMagnitude: 0
-  currentTurningSpeed: 0
+  currentAngularVelocity: 0
 --- !u!114 &3996479596944155095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,7 +512,7 @@ MonoBehaviour:
   steepnessCorrection: -0.008
   wavelengthCorrection: 125
   speedCorrection: -125
-  perfectWaveMatching: 0
+  usePhysics: 1
   strength: 1
   objectDepth: 0.2
   velocityDrag: 0.99
@@ -521,7 +524,7 @@ MonoBehaviour:
   - {fileID: 781300571211156085}
   steepness: -0.05
   wavelength: 150
-  speed: -15.625
+  waveSpeed: 0
   directions: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1979428326827761038
 GameObject:
