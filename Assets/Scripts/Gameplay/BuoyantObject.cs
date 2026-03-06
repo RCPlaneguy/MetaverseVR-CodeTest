@@ -68,6 +68,8 @@ public class BuoyantObject : MonoBehaviour
         // set to true if any effector is underwater
         _inContactWithWater = false;
 
+        float avgHeight = 0f;
+
         int effectorCount = effectors.Length;
         for (int i = 0; i < effectorCount; i++)
         {
@@ -79,7 +81,10 @@ public class BuoyantObject : MonoBehaviour
             effectorProjections[i].y = waterHeight + waveDisplacement.y;
 
             if (!usePhysics)
+            {
+                avgHeight += effectorProjections[i].y;
                 continue;
+            }
 
             // gravity
             rb.AddForceAtPosition(Physics.gravity / effectorCount, effectorPosition, ForceMode.Acceleration);
@@ -108,17 +113,11 @@ public class BuoyantObject : MonoBehaviour
 
         if (!usePhysics)
         {
-            if (effectorCount >= 3)
-            {
-                Plane plane = new Plane(
-                    effectorProjections[0],
-                    effectorProjections[1],
-                    effectorProjections[2]);
-            }
-            else
-            {
-
-            }
+            // get average height for floating position
+            avgHeight /= effectorCount;
+            Vector3 pos = transform.position;
+            pos.y = avgHeight;
+            transform.position = pos;
         }
     }
 

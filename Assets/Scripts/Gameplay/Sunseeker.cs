@@ -47,22 +47,19 @@ public class Sunseeker : BuoyantObject
 
     protected override void FixedUpdate()
     {
-        Quaternion preBuoyancyRotation = transform.rotation;
-
         // run basic buoyancy fixed update
         base.FixedUpdate();
 
-        // move ship position towards next position
-        Vector3 newPos = Vector3.MoveTowards(transform.position, currentPosTarget, speed * Time.deltaTime);
+        // transfer current floating height to target to avoid breaching whale behaviour
+        currentPosTarget.y = transform.position.y;
 
-        // retain calculated y value
-        newPos.y = transform.position.y;
-        transform.position = newPos;
+        // move ship position towards next position
+        transform.position = Vector3.MoveTowards(transform.position, currentPosTarget, speed * Time.deltaTime);
 
         // rotate ship rotation towards next position
         Vector3 dirToTarget = currentPosTarget - transform.position;
         if (dirToTarget != Vector3.zero)
-            transform.rotation = Quaternion.RotateTowards(preBuoyancyRotation, Quaternion.LookRotation(dirToTarget), turnSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dirToTarget), turnSpeed * Time.deltaTime);
 
         distToTarget = dirToTarget.magnitude;
 
