@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -85,6 +86,16 @@ public class GameManager : MonoBehaviour
 
         completeScreenTime.text = $"Time: {_elapsedTime:0.0}s";
         completeScreen.SetActive(true);
+    }
+
+    public void OnQuit(InputValue input)
+    {
+        float quit = input.Get<float>();
+        if (quit > 0.5f)
+        {
+            Debug.Log("Quitting game");
+            Application.Quit();
+        }
     }
 
     public void ResetGame()
