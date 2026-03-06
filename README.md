@@ -15,7 +15,7 @@ Camera pitch / yaw: Mouse
 
 Camera zoom: Scroll wheel
 
-Esc: Quit game
+Quit game: Esc
 
 
 Standalone Windows build available at: [Builds/LouisTorresTailfer_MetaverseVR_AssetTest](Builds/LouisTorresTailfer_MetaverseVR_AssetTest)
