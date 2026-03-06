@@ -167,8 +167,8 @@ MonoBehaviour:
   orbitStartingView: {x: 20, y: 0, z: 0}
   minMaxOrbitDistance: {x: 7.5, y: 12.5}
   minMaxVerticalOrbit: {x: 10, y: 60}
-  orbitZoomSpeed: 0.1
-  orbitSpeed: 1
+  orbitZoomSpeed: 0.01
+  orbitSpeed: 0.5
   orbitDamping: 10
 --- !u!1 &224892880712166948
 GameObject:
