@@ -6,9 +6,11 @@ using UnityEngine.Rendering.Universal;
 public class Powerboat : MonoBehaviour
 {
     [Header("Helm")]
-    [SerializeField] private float maxSpeed = 22;
-    [SerializeField] private float maxSpeedReverse = 13;
-    [SerializeField] private float turningSpeed = 44;
+    [SerializeField] private float timeToMaxSpeed = 7f;
+    [SerializeField] private float maxSpeed = 165;
+    [SerializeField] private float timeToMaxSpeedReverse = 2f;
+    [SerializeField] private float maxSpeedReverse = 40;
+    [SerializeField] private float turningSpeed = 100;
 
     [Header("Elements")]
     [SerializeField] private Rigidbody rb;
@@ -26,15 +28,27 @@ public class Powerboat : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private Vector2 inputs = new();
     public float forceMagnitude;
-    [SerializeField] private float currentSpeed;
+    [SerializeField] private float currentVelocity;
 
     [Space]
     [SerializeField] private float torqueMagnitude;
-    [SerializeField] private float currentTurningSpeed;
+    [SerializeField] private float currentAngularVelocity;
 
     private Vector3 engineRot;
     private Vignette _vignette;
     private bool _vignetteFound;
+    private float _currentSpeed;
+    private float speedAtStartOfAction;
+    private float _timeSinceStartedAction;
+    private MoveState _moveState = MoveState.Stop;
+    private MoveState _wasMoveState = MoveState.Stop;
+
+    private enum MoveState
+    {
+        Forward,
+        Reverse,
+        Stop
+    }
 
     // divide the speed values by this to get the 
     // force value necessary to achieve the corresponding top speed
@@ -63,10 +77,50 @@ public class Powerboat : MonoBehaviour
 
     private void HandleMovement()
     {
-        // calculate force magnitude using different force values for forward and reverse
-        forceMagnitude = inputs.y > 0
-            ? ToForce(maxSpeed) * inputs.y
-            : ToForce(maxSpeedReverse) * inputs.y;
+        // store if you're toing, froing, or stopping
+        _moveState = inputs.y switch
+        {
+            > 0 => MoveState.Forward,
+            < 0 => MoveState.Reverse,
+            _ => MoveState.Stop
+        };
+
+        // gradually increase applied speed over time
+
+        if (_wasMoveState != _moveState)
+        {
+            _timeSinceStartedAction = 0f;
+            speedAtStartOfAction = _currentSpeed;
+        }
+
+        switch (_moveState)
+        {
+            case MoveState.Forward:
+                _currentSpeed = Mathf.Lerp(0f, maxSpeed,
+                    (speedAtStartOfAction / maxSpeed) + (_timeSinceStartedAction / timeToMaxSpeed));
+                if (_currentSpeed > maxSpeed)
+                    _currentSpeed = maxSpeed;
+                break;
+            case MoveState.Reverse:
+                _currentSpeed = Mathf.Lerp(0f, maxSpeedReverse,
+                    (speedAtStartOfAction / maxSpeedReverse) + (_timeSinceStartedAction / timeToMaxSpeedReverse));
+                if (_currentSpeed > maxSpeedReverse)
+                    _currentSpeed = maxSpeedReverse;
+                break;
+            default:
+            case MoveState.Stop:
+                _currentSpeed = Mathf.Lerp(speedAtStartOfAction, 0f,
+                    (speedAtStartOfAction / maxSpeedReverse) + (_timeSinceStartedAction / timeToMaxSpeedReverse));
+                if (_currentSpeed < 0f)
+                    _currentSpeed = 0f;
+                break;
+        }
+
+        _timeSinceStartedAction += Time.deltaTime;
+        _wasMoveState = _moveState;
+
+        // calculate force magnitude using inputs to scale value
+        forceMagnitude = ToForce(_currentSpeed) * inputs.y;
 
         // apply force to rb along forward axis
         if (buoyantObj.InContactWithWater || gm.ignoreOutOfWaterCheck)
@@ -84,8 +138,8 @@ public class Powerboat : MonoBehaviour
             rb.AddTorque(torqueMagnitude * Time.fixedDeltaTime * transform.up);
 
         // update values for use elsewhere and for debug
-        currentSpeed = rb.velocity.magnitude;
-        currentTurningSpeed = rb.angularVelocity.magnitude;
+        currentVelocity = rb.velocity.magnitude;
+        currentAngularVelocity = rb.angularVelocity.magnitude;
     }
 
     private void HandleVisuals()
@@ -95,7 +149,7 @@ public class Powerboat : MonoBehaviour
         engines.localEulerAngles = engineRot;
 
         // handle speed vignette
-        float ratio = currentSpeed / maxVignetteSpeed;
+        float ratio = currentVelocity / maxVignetteSpeed;
         if (ratio > 1)
             ratio = 1;
         _vignette.intensity.value = maxVignetteIntensity * ratio;
