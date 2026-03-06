@@ -20,6 +20,7 @@ public class Powerboat : MonoBehaviour
 
     [Header("Visual Effects")]
     [SerializeField] private Volume globalVolume;
+    [SerializeField] private float maxVignetteSpeed = 20f;
     [SerializeField] private float maxVignetteIntensity = 0.5f;
 
     [Header("Debug")]
@@ -94,7 +95,7 @@ public class Powerboat : MonoBehaviour
         engines.localEulerAngles = engineRot;
 
         // handle speed vignette
-        float ratio = currentSpeed / maxSpeed;
+        float ratio = currentSpeed / maxVignetteSpeed;
         if (ratio > 1)
             ratio = 1;
         _vignette.intensity.value = maxVignetteIntensity * ratio;
