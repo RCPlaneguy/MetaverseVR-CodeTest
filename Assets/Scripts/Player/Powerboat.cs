@@ -110,7 +110,7 @@ public class Powerboat : MonoBehaviour
             default:
             case MoveState.Stop:
                 _currentSpeed = Mathf.Lerp(speedAtStartOfAction, 0f,
-                    (speedAtStartOfAction / maxSpeedReverse) + (_timeSinceStartedAction / timeToMaxSpeedReverse));
+                    (speedAtStartOfAction / maxSpeed) + (_timeSinceStartedAction / timeToMaxSpeed));
                 if (_currentSpeed < 0f)
                     _currentSpeed = 0f;
                 break;
