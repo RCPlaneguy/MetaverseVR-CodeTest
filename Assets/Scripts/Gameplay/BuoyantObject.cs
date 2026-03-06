@@ -14,7 +14,7 @@ public class BuoyantObject : MonoBehaviour
     [SerializeField] private float speedCorrection = -125f;
 
     [Header("Buoyancy")]
-    [SerializeField] private bool perfectWaveMatching;
+    [SerializeField] private bool usePhysics = true;
     [Range(0.01f, 5f)] public float strength = 1f;
     [Range(0.2f, 5f)] public float objectDepth = 1f;
 
@@ -22,12 +22,13 @@ public class BuoyantObject : MonoBehaviour
     public float angularDrag = 0.5f;
 
     [Header("Effectors")]
+    [Tooltip("Make sure these are inputted clockwise if not using physics!")]
     public Transform[] effectors;
 
     [Header("Debug")]
     [SerializeField] private float steepness;
     [SerializeField] private float wavelength;
-    [SerializeField] private float speed;
+    [SerializeField] private float waveSpeed;
     [SerializeField] private Vector4 directions;
 
     private Rigidbody rb;
@@ -37,7 +38,7 @@ public class BuoyantObject : MonoBehaviour
 
     private void Awake()
     {
-        if (!perfectWaveMatching)
+        if (usePhysics)
         {
             // Get rigidbody
             rb = GetComponent<Rigidbody>();
@@ -53,34 +54,32 @@ public class BuoyantObject : MonoBehaviour
 
     private void OnDisable()
     {
-        if (!perfectWaveMatching)
+        if (usePhysics)
             rb.useGravity = true;
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         steepness = waterMat.GetFloat("_WaveSteepness") * steepnessCorrection;
         wavelength = waterMat.GetFloat("_WaveLength") * wavelengthCorrection;
-        speed = waterMat.GetFloat("_WaveSpeed") * speedCorrection;
+        waveSpeed = waterMat.GetFloat("_WaveSpeed") * speedCorrection;
         directions = waterMat.GetVector("_WaveDirections");
 
         // set to true if any effector is underwater
         _inContactWithWater = false;
 
-        for (int i = 0, effectorCount = effectors.Length; i < effectorCount; i++)
+        int effectorCount = effectors.Length;
+        for (int i = 0; i < effectorCount; i++)
         {
             Vector3 effectorPosition = effectors[i].position;
 
-            Vector3 waveDisplacement = GerstnerWaveDisplacement.GetWaveDisplacement(effectorPosition, steepness, wavelength, speed, new float[] { directions.x, directions.y, directions.z, directions.w });
+            Vector3 waveDisplacement = GerstnerWaveDisplacement.GetWaveDisplacement(effectorPosition, steepness, wavelength, waveSpeed, new float[] { directions.x, directions.y, directions.z, directions.w });
 
             effectorProjections[i] = effectorPosition;
             effectorProjections[i].y = waterHeight + waveDisplacement.y;
 
-            if (perfectWaveMatching)
-            {
-                transform.position = effectorProjections[i];
+            if (!usePhysics)
                 continue;
-            }
 
             // gravity
             rb.AddForceAtPosition(Physics.gravity / effectorCount, effectorPosition, ForceMode.Acceleration);
@@ -105,6 +104,21 @@ public class BuoyantObject : MonoBehaviour
 
             // torque
             rb.AddTorque(-rb.angularVelocity * (angularDrag * Time.fixedDeltaTime), ForceMode.Impulse);
+        }
+
+        if (!usePhysics)
+        {
+            if (effectorCount >= 3)
+            {
+                Plane plane = new Plane(
+                    effectorProjections[0],
+                    effectorProjections[1],
+                    effectorProjections[2]);
+            }
+            else
+            {
+
+            }
         }
     }
 

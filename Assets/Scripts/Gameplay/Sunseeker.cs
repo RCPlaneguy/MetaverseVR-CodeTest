@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sunseeker : MonoBehaviour
+public class Sunseeker : BuoyantObject
 {
     [SerializeField] private BezierPath path;
     [SerializeField] private float speed = 5f;
@@ -45,15 +45,24 @@ public class Sunseeker : MonoBehaviour
         transform.LookAt(currentPosTarget);
     }
 
-    private void Update()
+    protected override void FixedUpdate()
     {
+        Quaternion preBuoyancyRotation = transform.rotation;
+
+        // run basic buoyancy fixed update
+        base.FixedUpdate();
+
         // move ship position towards next position
-        transform.position = Vector3.MoveTowards(transform.position, currentPosTarget, speed * Time.deltaTime);
+        Vector3 newPos = Vector3.MoveTowards(transform.position, currentPosTarget, speed * Time.deltaTime);
+
+        // retain calculated y value
+        newPos.y = transform.position.y;
+        transform.position = newPos;
 
         // rotate ship rotation towards next position
         Vector3 dirToTarget = currentPosTarget - transform.position;
         if (dirToTarget != Vector3.zero)
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dirToTarget), turnSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(preBuoyancyRotation, Quaternion.LookRotation(dirToTarget), turnSpeed * Time.deltaTime);
 
         distToTarget = dirToTarget.magnitude;
 
